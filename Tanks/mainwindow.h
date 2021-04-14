@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +18,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+protected:
+  void keyPressEvent(QKeyEvent * e);
 };
+
 #endif // MAINWINDOW_H

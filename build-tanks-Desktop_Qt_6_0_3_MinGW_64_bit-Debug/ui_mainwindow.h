@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
@@ -22,6 +23,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
+    QLabel *tank;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -29,12 +31,19 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
+        MainWindow->setEnabled(true);
+        MainWindow->resize(1000, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        tank = new QLabel(centralwidget);
+        tank->setObjectName(QString::fromUtf8("tank"));
+        tank->setGeometry(QRect(490, 270, 60, 60));
+        tank->setLayoutDirection(Qt::LeftToRight);
+        tank->setPixmap(QPixmap(QString::fromUtf8("../\320\244\320\260\320\271\320\273\321\213/tank.png")));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setGeometry(QRect(0, 0, 1000, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -48,6 +57,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        tank->setText(QString());
     } // retranslateUi
 
 };
