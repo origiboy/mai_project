@@ -1,4 +1,5 @@
 QT       += core gui
+QT += phonon
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,15 +11,24 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    tank.cpp \
+    widget.cpp
 
 HEADERS += \
-    mainwindow.h
+    tank.h \
+    widget.h
 
 FORMS += \
-    mainwindow.ui
+    widget.ui
+
+win32-msvc*{
+    LIBS += -luser32
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc
