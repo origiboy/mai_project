@@ -5,7 +5,8 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QGraphicsScene>
-
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 /* Подключаем библиотеку, отвечающую за использование WinAPI
  * Данная библиотека необходима для асинхронной проверки состояния клавиш
@@ -23,6 +24,7 @@ signals:
 
 public slots:
     void slotGameTimer(); // Слот, который отвечает за обработку перемещения треугольника
+    void shoot();
 
 protected:
     QRectF boundingRect() const;
@@ -30,8 +32,13 @@ protected:
 
 private:
     qreal angle;    // Угол поворота графического объекта
+    boolean shootState;
 
-
+public:
+    QMediaPlayer * m_player;        // Аудио плеер
+    QMediaPlaylist * m_playlist;    // Плейлист
+    QMediaPlayer * s_player;        // Аудио плеер
+    QMediaPlaylist * s_playlist;    // Плейлист
 };
 
 #endif // TANK_H

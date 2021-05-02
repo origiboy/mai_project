@@ -6,8 +6,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->resize(1200,1200);          /// Задаем размеры виджета, то есть окна
-    this->setFixedSize(1200,1200);    /// Фиксируем размеры виджета
+    this->resize(900,900);          /// Задаем размеры виджета, то есть окна
+    this->setFixedSize(900,900);    /// Фиксируем размеры виджета
 
     QPixmap bg(":/images/bg.png");
 
@@ -20,7 +20,7 @@ Widget::Widget(QWidget *parent) :
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); /// Отключаем скроллбар по вертикали
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); /// Отключаем скроллбар по горизонтали
 
-    scene->setSceneRect(0, 0,800,800); /// Устанавливаем область графической сцены
+    scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
     scene->addPixmap(bg);
     scene->addItem(triangle);   /// Добавляем на сцену треугольник
     triangle->setPos(30, 30);      /// Устанавливаем треугольник в центр сцены
@@ -32,7 +32,14 @@ Widget::Widget(QWidget *parent) :
      * */
     timer = new QTimer();
     connect(timer, &QTimer::timeout, triangle, &Triangle::slotGameTimer);
-    timer->start(1000 / 50);
+    timer->start(20);
+
+    timer_shoot = new QTimer();
+    connect(timer_shoot, &QTimer::timeout, triangle, &Triangle::shoot);
+    timer_shoot->start(1500);
+
+
+
 }
 
 Widget::~Widget()
