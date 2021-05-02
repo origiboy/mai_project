@@ -22,13 +22,11 @@ public:
 
 private:
     Ui::Widget      *ui;
-    QGraphicsScene  *scene;     /// Объявляем графическую сцену
-    Triangle        *triangle;  /// и треугольник
+    QGraphicsScene  *scene;
+    Triangle        *triangle;
+    Hit   *hit;
     QTimer          *timer;
-    QTimer           *timer_shoot;/* Объявляем игровой таймер, благодаря которому
-                                 * будет производиться изменения положения объекта на сцене
-                                 * При воздействии на него клавишами клавиатуры
-                                 * */
+    QTimer          *timer_shoot;
 };
 
 #endif // WIDGET_H

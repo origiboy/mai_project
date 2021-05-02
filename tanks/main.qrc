@@ -4,6 +4,6 @@
         <file>images/bg.png</file>
         <file>sounds/moving.mp3</file>
         <file>sounds/shoot.mp3</file>
-        <file>images/tank-shoot.png</file>
+        <file>images/hit.png</file>
     </qresource>
 </RCC>

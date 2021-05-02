@@ -21,6 +21,8 @@ public:
     ~Triangle();
 
 signals:
+    void explosionAdd(QGraphicsItem *a);
+    void explosionDelete(QGraphicsItem *a);
 
 public slots:
     void slotGameTimer(); // Слот, который отвечает за обработку перемещения треугольника
@@ -39,6 +41,30 @@ public:
     QMediaPlaylist * m_playlist;    // Плейлист
     QMediaPlayer * s_player;        // Аудио плеер
     QMediaPlaylist * s_playlist;    // Плейлист
+};
+
+class Hit : public QObject, public QGraphicsItem
+{
+    Q_OBJECT
+public:
+    explicit Hit(QObject *parent = 0);
+    ~Hit();
+
+signals:
+
+public slots:
+    void explosionAdd(QGraphicsItem *a);
+    void explosionDelete(QGraphicsItem *a);
+
+protected:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+private:
+
+
+public:
+
 };
 
 #endif // TANK_H
