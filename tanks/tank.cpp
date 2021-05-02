@@ -1,5 +1,5 @@
 #include "tank.h"
-
+#include "math.h"
 
 Triangle::Triangle(QObject *parent) :
     QObject(parent), QGraphicsItem()
@@ -97,12 +97,10 @@ void Triangle::slotGameTimer()
 void Triangle::shoot()
 {
     if(GetAsyncKeyState(VK_SPACE)){
-        emit explosionAdd(this);
         s_player->play();
-        update(QRectF(-22,-45,44,90));
+        emit explosionAdd(this);
     } else {
         emit explosionDelete(this);
-        update(QRectF(-22,-45,44,90));
     }
 }
 
@@ -136,16 +134,17 @@ void Hit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
 void Hit::explosionAdd(QGraphicsItem *a)
 {
     //a->setY(900);
-    this->setY(500);
-    this->setX(500);
+    int xTo = 300 * sin(a->rotation()/180*3.14);
+    int yTo = - 300 * cos(a->rotation()/180*3.14);
+    this->setX(xTo + a->x());
+    this->setY(yTo + a->y());
     this->setVisible(true);
 }
 
 void Hit::explosionDelete(QGraphicsItem *a)
 {
     //a->setY(900);
-    this->setY(500);
-    this->setX(500);
+
     this->setVisible(false);
 }
 

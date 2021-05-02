@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,7 @@ class Ui_Widget
 {
 public:
     QGraphicsView *graphicsView;
+    QLabel *label;
 
     void setupUi(QWidget *Widget)
     {
@@ -30,6 +32,9 @@ public:
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setGeometry(QRect(0, 100, 900, 900));
         graphicsView->setLineWidth(0);
+        label = new QLabel(Widget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(100, 50, 47, 13));
 
         retranslateUi(Widget);
 
@@ -39,6 +44,7 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QApplication::translate("Widget", "Widget", nullptr));
+        label->setText(QApplication::translate("Widget", "TextLabel", nullptr));
     } // retranslateUi
 
 };

@@ -26,8 +26,7 @@ Widget::Widget(QWidget *parent) :
     scene->addItem(triangle);   /// Добавляем на сцену треугольник
     scene->addItem(hit);
     hit->setVisible(false);
-    triangle->setPos(60, 60);      /// Устанавливаем треугольник в центр сцены
-
+    triangle->setPos(100, 60);      /// Устанавливаем треугольник в центр сцены
 
 
     /* Инициализируем таймер и вызываем слот обработки сигнала таймера
@@ -42,7 +41,7 @@ Widget::Widget(QWidget *parent) :
 
     timer_shoot = new QTimer();
     connect(timer_shoot, &QTimer::timeout, triangle, &Triangle::shoot);
-    timer_shoot->start(1500);
+    timer_shoot->start(2000);
 
     connect(triangle, &Triangle::explosionAdd, hit, &Hit::explosionAdd);
     connect(triangle, &Triangle::explosionDelete, hit, &Hit::explosionDelete);

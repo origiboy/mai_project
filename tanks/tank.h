@@ -33,10 +33,11 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    qreal angle;    // Угол поворота графического объекта
+
     boolean shootState;
 
 public:
+    qreal angle;    // Угол поворота графического объекта
     QMediaPlayer * m_player;        // Аудио плеер
     QMediaPlaylist * m_playlist;    // Плейлист
     QMediaPlayer * s_player;        // Аудио плеер
