@@ -76,7 +76,7 @@ public:
 signals:
 
 public slots:
-    void restriction(QGraphicsItem *a);
+
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

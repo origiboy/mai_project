@@ -27,7 +27,7 @@ Tank::~Tank()
 
 QRectF Tank::boundingRect() const
 {
-    return QRectF(-22,-45,44,90);
+    return QRectF(-45,-45,90,90);
 }
 
 void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -35,7 +35,7 @@ void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->setPen(Qt::NoPen);
         painter->setBrush(Qt::NoBrush);
 
-            painter->drawPixmap(-22,-45,44,90,QPixmap(":/images/tank.png"));
+            painter->drawPixmap(-45,-45,90,90,QPixmap(":/images/tank.png"));
 
         Q_UNUSED(option);
         Q_UNUSED(widget);
@@ -48,7 +48,7 @@ void Tank::slotGameTimer()
           GetAsyncKeyState(VK_UP) ||
           GetAsyncKeyState(VK_DOWN))
        {
-        emit restriction(this);
+
 
            m_player->play();
        } else {
@@ -88,6 +88,7 @@ void Tank::slotGameTimer()
         this->setY(900);        // снизу
     }
 
+    emit restriction(this);
 
 }
 
@@ -158,20 +159,16 @@ Block::~Block()
 
 QRectF Block::boundingRect() const
 {
-    return QRectF(-30,-30,60,60);   /// Ограничиваем область, в которой лежит треугольник
+    return QRectF(0,0,60,60);   /// Ограничиваем область, в которой лежит треугольник
 }
 
 void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
         painter->setPen(Qt::NoPen);
         painter->setBrush(Qt::NoBrush);
-        painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/block-wood.png"));
+        painter->drawPixmap(0,0,60,60,QPixmap(":/images/block-wood.png"));
         Q_UNUSED(option);
         Q_UNUSED(widget);
 }
 
-void Block::restriction(QGraphicsItem *a)
-{
-    a->setX(this->x());
-    a->setY(this->y());
-}
+

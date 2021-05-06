@@ -26,7 +26,11 @@ private:
     Tank        *tank;
     Hit   *hit;
     Block   *blocks[15];
+    int size;
     QTimer          *timer;
+
+public slots:
+    void restriction(QGraphicsItem *a);
 };
 
 #endif // WIDGET_H
