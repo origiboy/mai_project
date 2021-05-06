@@ -6,8 +6,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->resize(900,900);
-    this->setFixedSize(900,900);
+    this->resize(900,1000);
+    this->setFixedSize(900,1000);
 
     QPixmap bg(":/images/bg.png");
 
@@ -28,14 +28,14 @@ Widget::Widget(QWidget *parent) :
     scene->addItem(hit);
 
     hit->setVisible(false);
-    tank->setPos(0, 0);
-    size = 1;
+    tank->setPos(30, 30);
+    size = 15;
     int posX = 0, posY = 0;
     for (int i=0; i < size; i++) {
         blocks[i] = new Block();
         scene->addItem(blocks[i]);
-        posX = 2;
-        posY = 2;
+        posX = qrand() % (14 + 1); //qrand() % ((high + 1) - low) + low
+        posY = qrand() % (14 + 1);
         blocks[i]->setPos(posX * 60, posY * 60);
 
     }
@@ -43,7 +43,7 @@ Widget::Widget(QWidget *parent) :
 
     timer = new QTimer();
     connect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
-    timer->start(20);
+    timer->start(10);
 
     timer = new QTimer();
     connect(timer, &QTimer::timeout, tank, &Tank::shoot);
@@ -56,23 +56,23 @@ Widget::Widget(QWidget *parent) :
 
 void Widget::restriction(QGraphicsItem *a)
 {
-    int tankFrontX = a->x() + 45;
-    int tankFrontY = a->y() + 45;
-    int tankBackX = a->x() - 45;
-    int tankBackY = a->y() - 45;
+    int tankFrontX = a->x() + 30;
+    int tankFrontY = a->y() + 30;
+    int tankBackX = a->x() - 30;
+    int tankBackY = a->y() - 30;
     for (int j=0; j < size; j++)
     {
         if (tankFrontX + 2 > blocks[j]->x() && tankFrontX <= blocks[j]->x() + 60 && tankFrontY >= blocks[j]->y() &&  tankBackY <= blocks[j]->y() + 60) {
-             a->setX(a->x()-2);
+             a->setX(a->x()-1);
         }
         if (tankBackX - 2 <= blocks[j]->x() + 60  && tankBackX >= blocks[j]->x() && tankFrontY >= blocks[j]->y() &&  tankBackY <= blocks[j]->y() + 60) {
-             a->setX(a->x()+2);
+             a->setX(a->x()+1);
         }
         if (tankFrontY + 2 >= blocks[j]->y() && tankFrontY <= blocks[j]->y() + 60 && tankFrontX >= blocks[j]->x() &&  tankBackX <= blocks[j]->x() + 60) {
-             a->setY(a->y()-2);
+             a->setY(a->y()-1);
         }
         if (tankBackY >= blocks[j]->y() && tankBackY - 2 <= blocks[j]->y() + 60 && tankFrontX >= blocks[j]->x() &&  tankBackX <= blocks[j]->x() + 60) {
-             a->setY(a->y()+2);
+             a->setY(a->y()+1);
         }
     }
 

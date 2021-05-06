@@ -27,7 +27,7 @@ Tank::~Tank()
 
 QRectF Tank::boundingRect() const
 {
-    return QRectF(-45,-45,90,90);
+    return QRectF(-30,-30,60,60);
 }
 
 void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -35,7 +35,7 @@ void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->setPen(Qt::NoPen);
         painter->setBrush(Qt::NoBrush);
 
-            painter->drawPixmap(-45,-45,90,90,QPixmap(":/images/tank.png"));
+            painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tank.png"));
 
         Q_UNUSED(option);
         Q_UNUSED(widget);
@@ -63,10 +63,10 @@ void Tank::slotGameTimer()
         setRotation(angle);
     }
     if(GetAsyncKeyState(VK_UP)){
-        setPos(mapToParent(0, -2));
+        setPos(mapToParent(0, -1));
     }
     if(GetAsyncKeyState(VK_DOWN)){
-        setPos(mapToParent(0, 2));
+        setPos(mapToParent(0, 1));
 
 
     }
