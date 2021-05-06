@@ -8,21 +8,19 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 
-/* Подключаем библиотеку, отвечающую за использование WinAPI
- * Данная библиотека необходима для асинхронной проверки состояния клавиш
- * */
 #include <windows.h>
 
-class Triangle : public QObject, public QGraphicsItem
+class Tank : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    explicit Triangle(QObject *parent = 0);
-    ~Triangle();
+    explicit Tank(QObject *parent = 0);
+    ~Tank();
 
 signals:
     void explosionAdd(QGraphicsItem *a);
     void explosionDelete(QGraphicsItem *a);
+    void restriction(QGraphicsItem *a);
 
 public slots:
     void slotGameTimer(); // Слот, который отвечает за обработку перемещения треугольника
@@ -37,11 +35,11 @@ private:
     boolean shootState;
 
 public:
-    qreal angle;    // Угол поворота графического объекта
-    QMediaPlayer * m_player;        // Аудио плеер
-    QMediaPlaylist * m_playlist;    // Плейлист
-    QMediaPlayer * s_player;        // Аудио плеер
-    QMediaPlaylist * s_playlist;    // Плейлист
+    qreal angle;
+    QMediaPlayer * m_player;
+    QMediaPlaylist * m_playlist;
+    QMediaPlayer * s_player;
+    QMediaPlaylist * s_playlist;
 };
 
 class Hit : public QObject, public QGraphicsItem
@@ -57,6 +55,28 @@ public slots:
     void explosionAdd(QGraphicsItem *a);
     void explosionDelete(QGraphicsItem *a);
 
+protected:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+private:
+
+
+public:
+
+};
+
+class Block : public QObject, public QGraphicsItem
+{
+    Q_OBJECT
+public:
+    explicit Block(QObject *parent = 0);
+    ~Block();
+
+signals:
+
+public slots:
+    void restriction(QGraphicsItem *a);
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

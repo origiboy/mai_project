@@ -1,7 +1,7 @@
 #include "tank.h"
 #include "math.h"
 
-Triangle::Triangle(QObject *parent) :
+Tank::Tank(QObject *parent) :
     QObject(parent), QGraphicsItem()
 {
     shootState = false;
@@ -20,17 +20,17 @@ Triangle::Triangle(QObject *parent) :
     s_playlist->addMedia(QUrl("qrc:/sounds/shoot.mp3"));       // Добавление трека в плейлист
 }
 
-Triangle::~Triangle()
+Tank::~Tank()
 {
 
 }
 
-QRectF Triangle::boundingRect() const
+QRectF Tank::boundingRect() const
 {
-    return QRectF(-22,-45,44,90);   /// Ограничиваем область, в которой лежит треугольник
+    return QRectF(-22,-45,44,90);
 }
 
-void Triangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
         painter->setPen(Qt::NoPen);
         painter->setBrush(Qt::NoBrush);
@@ -41,39 +41,34 @@ void Triangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         Q_UNUSED(widget);
 }
 
-void Triangle::slotGameTimer()
+void Tank::slotGameTimer()
 {
-    /* Поочерёдно выполняем проверку на нажатие клавиш
-     * с помощью функции асинхронного получения состояния клавиш,
-     * которая предоставляется WinAPI
-     * */
     if(GetAsyncKeyState(VK_LEFT) ||
           GetAsyncKeyState(VK_RIGHT) ||
           GetAsyncKeyState(VK_UP) ||
           GetAsyncKeyState(VK_DOWN))
        {
-          // Программный код из прошлых уроков
+        emit restriction(this);
 
-           m_player->play();   // Плеер играет только тогда, когда муха движется
+           m_player->play();
        } else {
-           m_player->stop();   // Если Муха не движется, то отключаем плее
+           m_player->stop();
        }
     if(GetAsyncKeyState(VK_LEFT)){
-        angle -= 1;        // Задаём поворот на 10 градусов влево
-        setRotation(angle); // Поворачиваем объект
+        angle -= 1;
+        setRotation(angle);
     }
     if(GetAsyncKeyState(VK_RIGHT)){
-        angle += 1;        // Задаём поворот на 10 градусов вправо
-        setRotation(angle); // Поворачиваем объект
+        angle += 1;
+        setRotation(angle);
     }
     if(GetAsyncKeyState(VK_UP)){
         setPos(mapToParent(0, -2));
     }
     if(GetAsyncKeyState(VK_DOWN)){
-        setPos(mapToParent(0, 2));      /* Продвигаем объект на 5 пискселей назад
-                                         * перетранслировав их в координатную систему
-                                         * графической сцены
-                                    * */
+        setPos(mapToParent(0, 2));
+
+
     }
 
     /* Проверка выхода за границы поля
@@ -92,9 +87,11 @@ void Triangle::slotGameTimer()
     if(this->y() + 1 > 900){
         this->setY(900);        // снизу
     }
+
+
 }
 
-void Triangle::shoot()
+void Tank::shoot()
 {
     if(GetAsyncKeyState(VK_SPACE)){
         s_player->play();
@@ -148,3 +145,33 @@ void Hit::explosionDelete(QGraphicsItem *a)
     this->setVisible(false);
 }
 
+Block::Block(QObject *parent) :
+    QObject(parent), QGraphicsItem()
+{
+
+}
+
+Block::~Block()
+{
+
+}
+
+QRectF Block::boundingRect() const
+{
+    return QRectF(-30,-30,60,60);   /// Ограничиваем область, в которой лежит треугольник
+}
+
+void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/block-wood.png"));
+        Q_UNUSED(option);
+        Q_UNUSED(widget);
+}
+
+void Block::restriction(QGraphicsItem *a)
+{
+    a->setX(this->x());
+    a->setY(this->y());
+}

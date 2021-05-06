@@ -6,15 +6,16 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    this->resize(900,900);          /// Задаем размеры виджета, то есть окна
-    this->setFixedSize(900,900);    /// Фиксируем размеры виджета
+    this->resize(900,900);
+    this->setFixedSize(900,900);
 
     QPixmap bg(":/images/bg.png");
 
 
     scene = new QGraphicsScene();   /// Инициализируем графическую сцену
-    triangle = new Triangle();      /// Инициализируем треугольник
+    tank = new Tank();
     hit = new Hit();
+
 
     ui->graphicsView->setScene(scene);  /// Устанавливаем графическую сцену в graphicsView
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);    /// Устанавливаем сглаживание
@@ -23,28 +24,34 @@ Widget::Widget(QWidget *parent) :
 
     scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
     scene->addPixmap(bg);
-    scene->addItem(triangle);   /// Добавляем на сцену треугольник
+    scene->addItem(tank);
     scene->addItem(hit);
+
     hit->setVisible(false);
-    triangle->setPos(100, 60);      /// Устанавливаем треугольник в центр сцены
+    tank->setPos(100, 60);
+    int size = 15;
+    int posX = 0, posY = 0;
+    for (int i=0; i < size; i++) {
+        blocks[i] = new Block();
+        scene->addItem(blocks[i]);
+        posX = rand() % 13;
+        posY = rand() % 13;
+        blocks[i]->setPos(30 + posX * 60, 30 + posY * 60);
+
+    }
 
 
-    /* Инициализируем таймер и вызываем слот обработки сигнала таймера
-     * у Треугольника 20 раз в секунду.
-     * Управляя скоростью отсчётов, соответственно управляем скоростью
-     * изменения состояния графической сцены
-     * */
     timer = new QTimer();
-    connect(timer, &QTimer::timeout, triangle, &Triangle::slotGameTimer);
+    connect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
     timer->start(20);
 
+    timer = new QTimer();
+    connect(timer, &QTimer::timeout, tank, &Tank::shoot);
+    timer->start(2000);
 
-    timer_shoot = new QTimer();
-    connect(timer_shoot, &QTimer::timeout, triangle, &Triangle::shoot);
-    timer_shoot->start(2000);
-
-    connect(triangle, &Triangle::explosionAdd, hit, &Hit::explosionAdd);
-    connect(triangle, &Triangle::explosionDelete, hit, &Hit::explosionDelete);
+    connect(tank, &Tank::explosionAdd, hit, &Hit::explosionAdd);
+    connect(tank, &Tank::explosionDelete, hit, &Hit::explosionDelete);
+    connect(tank, &Tank::restriction, *blocks, &Block::restriction);
 }
 
 Widget::~Widget()

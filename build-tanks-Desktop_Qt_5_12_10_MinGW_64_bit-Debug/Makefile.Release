@@ -108,6 +108,8 @@ compiler_rcc_clean:
 release/qrc_main.cpp: ../tanks/main.qrc \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/bin/rcc.exe \
 		../tanks/images/tank.png \
+		../tanks/images/hit.png \
+		../tanks/images/block-wood.png \
 		../tanks/images/bg.png \
 		../tanks/sounds/moving.mp3 \
 		../tanks/sounds/shoot.mp3
@@ -835,7 +837,21 @@ release/widget.o: ../tanks/widget.cpp ../tanks/widget.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtMultimedia/QMediaPlaylist \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtMultimedia/qmediaplaylist.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtMultimedia/qmediabindableinterface.h \
-		ui_widget.h
+		ui_widget.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QApplication \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qapplication.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtGui/qinputmethod.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QGraphicsView \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qgraphicsview.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qscrollarea.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QLabel \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qlabel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\widget.o ..\tanks\widget.cpp
 
 release/qrc_main.o: release/qrc_main.cpp 

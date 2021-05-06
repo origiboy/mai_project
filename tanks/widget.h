@@ -23,10 +23,10 @@ public:
 private:
     Ui::Widget      *ui;
     QGraphicsScene  *scene;
-    Triangle        *triangle;
+    Tank        *tank;
     Hit   *hit;
+    Block   *blocks[15];
     QTimer          *timer;
-    QTimer          *timer_shoot;
 };
 
 #endif // WIDGET_H
