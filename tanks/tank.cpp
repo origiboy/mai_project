@@ -32,11 +32,17 @@ QRectF Tank::boundingRect() const
 
 void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(Qt::NoBrush);
-
-            painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tank.png"));
-
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(Qt::NoBrush);
+    if (moveNext) {
+        moveNext = false;
+        painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tank.png"));
+    } else {
+        moveNext = true;
+        painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tank-moved.png"));
+    }
+        painter->setPen(QPen(Qt::green));
+        painter->fillRect(30, 30, -60, 0 - 0, QColor(255, 0, 0, 127));
         Q_UNUSED(option);
         Q_UNUSED(widget);
 }
@@ -74,18 +80,18 @@ void Tank::slotGameTimer()
     /* Проверка выхода за границы поля
      * Если объект выходит за заданные границы, то возвращаем его назад
      * */
-    if(this->x() - 1 < 0){
-        this->setX(0);       // слева
+    if(this->x() - 1 < 30){
+        this->setX(31);       // слева
     }
-    if(this->x() + 1 > 900){
-        this->setX(900);        // справа
+    if(this->x() + 1 > 870){
+        this->setX(869);        // справа
     }
 
-    if(this->y() - 1 < 0){
-        this->setY(0);       // сверху
+    if(this->y() - 1 < 30){
+        this->setY(31);       // сверху
     }
-    if(this->y() + 1 > 900){
-        this->setY(900);        // снизу
+    if(this->y() + 1 > 870){
+        this->setY(869);        // снизу
     }
 
     emit restriction(this);
@@ -96,9 +102,9 @@ void Tank::shoot()
 {
     if(GetAsyncKeyState(VK_SPACE)){
         s_player->play();
-        emit explosionAdd(this);
+        emit explosionAdd();
     } else {
-        emit explosionDelete(this);
+        emit explosionDelete();
     }
 }
 
@@ -129,17 +135,12 @@ void Hit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
         Q_UNUSED(widget);
 }
 
-void Hit::explosionAdd(QGraphicsItem *a)
+void Hit::explosionAdd()
 {
-    //a->setY(900);
-    int xTo = 300 * sin(a->rotation()/180*3.14);
-    int yTo = - 300 * cos(a->rotation()/180*3.14);
-    this->setX(xTo + a->x());
-    this->setY(yTo + a->y());
-    this->setVisible(true);
+    blockHit();
 }
 
-void Hit::explosionDelete(QGraphicsItem *a)
+void Hit::explosionDelete()
 {
     //a->setY(900);
 

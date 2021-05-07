@@ -18,8 +18,8 @@ public:
     ~Tank();
 
 signals:
-    void explosionAdd(QGraphicsItem *a);
-    void explosionDelete(QGraphicsItem *a);
+    void explosionAdd();
+    void explosionDelete();
     void restriction(QGraphicsItem *a);
 
 public slots:
@@ -30,16 +30,16 @@ protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+
 private:
 
     boolean shootState;
 
 public:
     qreal angle;
-    QMediaPlayer * m_player;
-    QMediaPlaylist * m_playlist;
-    QMediaPlayer * s_player;
-    QMediaPlaylist * s_playlist;
+    boolean moveNext = false;
+    QMediaPlayer * m_player, * s_player;
+    QMediaPlaylist * m_playlist, * s_playlist;;
 };
 
 class Hit : public QObject, public QGraphicsItem
@@ -50,10 +50,10 @@ public:
     ~Hit();
 
 signals:
-
+    void blockHit();
 public slots:
-    void explosionAdd(QGraphicsItem *a);
-    void explosionDelete(QGraphicsItem *a);
+    void explosionAdd();
+    void explosionDelete();
 
 protected:
     QRectF boundingRect() const;

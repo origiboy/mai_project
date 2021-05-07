@@ -31,6 +31,7 @@ private:
 
 public slots:
     void restriction(QGraphicsItem *a);
+    void blockHit();
 };
 
 #endif // WIDGET_H
