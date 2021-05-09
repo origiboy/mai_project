@@ -7,17 +7,17 @@ Tank::Tank(QObject *parent) :
     shootState = false;
     angle = 90;     // Задаём угол поворота графического объекта
     setRotation(angle);     // Устанавилваем угол поворота графического объекта
-    m_player = new QMediaPlayer(this);          // Инициализация плеера
-    m_playlist = new QMediaPlaylist(m_player);  // Инициализация плейлиста
+    m_player = new QMediaPlayer(this);
+    m_playlist = new QMediaPlaylist(m_player);
 
-    m_player->setPlaylist(m_playlist);          // Установка плейлиста в аудио плеер
-    m_playlist->addMedia(QUrl("qrc:/sounds/moving.mp3"));       // Добавление трека в плейлист
+    m_player->setPlaylist(m_playlist);
+    m_playlist->addMedia(QUrl("qrc:/sounds/moving.mp3"));
 
-    s_player = new QMediaPlayer(this);          // Инициализация плеера
-    s_playlist = new QMediaPlaylist(s_player);  // Инициализация плейлиста
+    s_player = new QMediaPlayer(this);
+    s_playlist = new QMediaPlaylist(s_player);
 
-    s_player->setPlaylist(s_playlist);          // Установка плейлиста в аудио плеер
-    s_playlist->addMedia(QUrl("qrc:/sounds/shoot.mp3"));       // Добавление трека в плейлист
+    s_player->setPlaylist(s_playlist);
+    s_playlist->addMedia(QUrl("qrc:/sounds/shoot.mp3"));
 }
 
 Tank::~Tank()

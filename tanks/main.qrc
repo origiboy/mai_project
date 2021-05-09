@@ -7,5 +7,7 @@
         <file>images/hit.png</file>
         <file>images/block-wood.png</file>
         <file>images/tank-moved.png</file>
+        <file>images/tankEnemy.png</file>
+        <file>images/tankEnemy-moved.png</file>
     </qresource>
 </RCC>

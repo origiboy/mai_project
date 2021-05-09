@@ -27,13 +27,14 @@ private:
     Tank        *tank;
     Hit   *hit;
     Bot   *botA;
-    Block   *blocks[15];
+    Block   *blocks[30];
     int size;
     QTimer          *timer;
 
 public slots:
     void restriction(QGraphicsItem *a);
     void blockHit();
+    void on_pushButton_clicked();
 };
 
 #endif // WIDGET_H

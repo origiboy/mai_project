@@ -14,6 +14,7 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,11 @@ public:
     QLabel *author;
     QPushButton *pushButton;
     QLabel *logo;
+    QPushButton *restart;
+    QLabel *label;
+    QSpinBox *spinBox;
+    QLabel *label_2;
+    QSpinBox *spinBox_2;
 
     void setupUi(QWidget *Widget)
     {
@@ -67,6 +73,32 @@ public:
         font2.setBold(true);
         font2.setWeight(75);
         logo->setFont(font2);
+        restart = new QPushButton(Widget);
+        restart->setObjectName(QString::fromUtf8("restart"));
+        restart->setGeometry(QRect(150, 10, 40, 40));
+        label = new QLabel(Widget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(240, 0, 170, 30));
+        QFont font3;
+        font3.setFamily(QString::fromUtf8("Segoe UI Black"));
+        font3.setPointSize(12);
+        font3.setBold(true);
+        font3.setWeight(75);
+        label->setFont(font3);
+        spinBox = new QSpinBox(Widget);
+        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        spinBox->setGeometry(QRect(420, 5, 50, 20));
+        spinBox->setMinimum(1);
+        spinBox->setMaximum(4);
+        label_2 = new QLabel(Widget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(240, 30, 170, 30));
+        label_2->setFont(font3);
+        spinBox_2 = new QSpinBox(Widget);
+        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
+        spinBox_2->setGeometry(QRect(420, 35, 50, 20));
+        spinBox_2->setMinimum(10);
+        spinBox_2->setMaximum(30);
 
         retranslateUi(Widget);
 
@@ -79,6 +111,9 @@ public:
         author->setText(QApplication::translate("Widget", "Created by Mike Kosarev for MAI", nullptr));
         pushButton->setText(QApplication::translate("Widget", "\320\235\320\220\320\247\320\220\320\242\320\254 \320\230\320\223\320\240\320\243", nullptr));
         logo->setText(QApplication::translate("Widget", "TanksBattle", nullptr));
+        restart->setText(QString());
+        label->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\276\321\202\320\276\320\262", nullptr));
+        label_2->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\273\320\276\320\272\320\276\320\262", nullptr));
     } // retranslateUi
 
 };
