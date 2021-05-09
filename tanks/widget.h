@@ -7,6 +7,7 @@
 #include <QTimer>
 
 #include <tank.h>
+#include <bot.h>
 
 namespace Ui {
 class Widget;
@@ -25,6 +26,7 @@ private:
     QGraphicsScene  *scene;
     Tank        *tank;
     Hit   *hit;
+    Bot   *botA;
     Block   *blocks[15];
     int size;
     QTimer          *timer;

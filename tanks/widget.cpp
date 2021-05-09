@@ -16,6 +16,7 @@ Widget::Widget(QWidget *parent) :
     scene = new QGraphicsScene();   /// Инициализируем графическую сцену
     tank = new Tank();
     hit = new Hit();
+    botA = new Bot();
 
 
     ui->graphicsView->setScene(scene);  /// Устанавливаем графическую сцену в graphicsView
@@ -29,8 +30,9 @@ Widget::Widget(QWidget *parent) :
     scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
     scene->addPixmap(bg);
     scene->addItem(tank);
+    scene->addItem(botA);
 
-    tank->setPos(60, 60);
+    botA->setPos(600, 600);
     size = 15;
     int posX = 0, posY = 0;
     for (int i=0; i < size; i++) {

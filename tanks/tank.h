@@ -39,7 +39,7 @@ public:
     qreal angle;
     boolean moveNext = false;
     QMediaPlayer * m_player, * s_player;
-    QMediaPlaylist * m_playlist, * s_playlist;;
+    QMediaPlaylist * m_playlist, * s_playlist;
 };
 
 class Hit : public QObject, public QGraphicsItem
