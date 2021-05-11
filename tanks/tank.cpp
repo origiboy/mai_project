@@ -9,13 +9,10 @@ Tank::Tank(QObject *parent) :
     setRotation(angle);     // Устанавилваем угол поворота графического объекта
     m_player = new QMediaPlayer(this);
     m_playlist = new QMediaPlaylist(m_player);
-
     m_player->setPlaylist(m_playlist);
     m_playlist->addMedia(QUrl("qrc:/sounds/moving.mp3"));
-
     s_player = new QMediaPlayer(this);
     s_playlist = new QMediaPlaylist(s_player);
-
     s_player->setPlaylist(s_playlist);
     s_playlist->addMedia(QUrl("qrc:/sounds/shoot.mp3"));
 }
@@ -49,6 +46,7 @@ void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void Tank::slotGameTimer()
 {
+    detectionEngine(this);
     if(GetAsyncKeyState(VK_LEFT) ||
           GetAsyncKeyState(VK_RIGHT) ||
           GetAsyncKeyState(VK_UP) ||
@@ -77,21 +75,18 @@ void Tank::slotGameTimer()
 
     }
 
-    /* Проверка выхода за границы поля
-     * Если объект выходит за заданные границы, то возвращаем его назад
-     * */
     if(this->x() - 1 < 30){
-        this->setX(31);       // слева
+        this->setX(31);
     }
     if(this->x() + 1 > 870){
-        this->setX(869);        // справа
+        this->setX(869);
     }
 
     if(this->y() - 1 < 30){
-        this->setY(31);       // сверху
+        this->setY(31);
     }
     if(this->y() + 1 > 870){
-        this->setY(869);        // снизу
+        this->setY(869);
     }
 
     emit restriction(this);
@@ -123,7 +118,7 @@ Hit::~Hit()
 
 QRectF Hit::boundingRect() const
 {
-    return QRectF(-30,-30,60,60);   /// Ограничиваем область, в которой лежит треугольник
+    return QRectF(-30,-30,60,60);
 }
 
 void Hit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -142,34 +137,9 @@ void Hit::explosionAdd()
 
 void Hit::explosionDelete()
 {
-    //a->setY(900);
-
     this->setVisible(false);
 }
 
-Block::Block(QObject *parent) :
-    QObject(parent), QGraphicsItem()
-{
 
-}
-
-Block::~Block()
-{
-
-}
-
-QRectF Block::boundingRect() const
-{
-    return QRectF(0,0,60,60);   /// Ограничиваем область, в которой лежит треугольник
-}
-
-void Block::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(Qt::NoBrush);
-        painter->drawPixmap(0,0,60,60,QPixmap(":/images/block-wood.png"));
-        Q_UNUSED(option);
-        Q_UNUSED(widget);
-}
 
 

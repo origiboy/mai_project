@@ -8,6 +8,7 @@
 
 #include <tank.h>
 #include <bot.h>
+#include <block.h>
 
 namespace Ui {
 class Widget;
@@ -26,9 +27,10 @@ private:
     QGraphicsScene  *scene;
     Tank        *tank;
     Hit   *hit;
-    Bot   *botA;
+    Hit   *hitEnemy[4];
+    Bot   *bot[4];
     Block   *blocks[30];
-    int size;
+    int size, botsCount;
     QTimer          *timer;
 
 public slots:

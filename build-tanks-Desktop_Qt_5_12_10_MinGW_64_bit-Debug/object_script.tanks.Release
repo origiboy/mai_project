@@ -1,0 +1,10 @@
+release/block.o
+release/bot.o
+release/main.o
+release/tank.o
+release/widget.o
+release/qrc_main.o
+release/moc_block.o
+release/moc_bot.o
+release/moc_tank.o
+release/moc_widget.o

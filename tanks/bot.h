@@ -8,7 +8,6 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QDateTime>
-
 #include <windows.h>
 
 class Bot : public QObject, public QGraphicsItem
@@ -20,9 +19,12 @@ public:
 
 signals:
     void restriction(QGraphicsItem *a);
+    void aimingEngine(QGraphicsItem *a);
 
 public slots:
     void movingEngine();
+    void detectionEngine(QGraphicsItem *a);
+    void shoot();
 
 protected:
     QRectF boundingRect() const;
@@ -31,14 +33,20 @@ protected:
 private:
     qreal angle;
     qreal angleNew;
+    int movingCount = 0;
+
     boolean moveNext = false;
     boolean turning = false;
     boolean moving = false;
-    int movingCount = 0;
+
+    boolean aimDetecting = false;
+    boolean aimDetected = false;
+
     QMediaPlayer * m_player, * s_player;
     QMediaPlaylist * m_playlist, * s_playlist;
 
 public:
+    int Random = 0;
 
 };
 

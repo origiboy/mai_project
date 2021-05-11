@@ -2,45 +2,63 @@
 #include "ui_widget.h"
 #include "math.h"
 
-static int randomBetween(int low, int high)
-{
-    return (qrand() % ((high + 1) - low) + low);
-}
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
+    /* Инициализация фона */
 
     ui->setupUi(this);
     this->resize(900,1000);
     this->setFixedSize(900,1000);
-    scene = new QGraphicsScene();   /// Инициализируем графическую сцену
-    ui->graphicsView->setScene(scene);  /// Устанавливаем графическую сцену в graphicsView
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);    /// Устанавливаем сглаживание
-    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); /// Отключаем скроллбар по вертикали
-    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); /// Отключаем скроллбар по горизонтали
+    scene = new QGraphicsScene();
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     QPixmap bg(":/images/bg.png");
+    scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
+    scene->addPixmap(bg);
+
+    /* Кастомизация элементов */
 
     ui->author->setStyleSheet("background-color: #75c1ff;" "selection-color: #75c1ff;" "selection-background-color: blue;");
     ui->pushButton->setStyleSheet("background-color: #008000;" "selection-color: #008000;" "color: white;" "border-radius: 10px;");
-    scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
-    scene->addPixmap(bg);
 
 }
 
 void Widget::on_pushButton_clicked() {
+
+    /* Отключение кнопки запуска */
+
     ui->pushButton->setDisabled(true);
     ui->pushButton->setStyleSheet("background-color: #333;" "selection-color: #333;" "color: white;" "border-radius: 10px;");
+
+    /* Создание объектов пользовательский танк и выстрел */
+
     tank = new Tank();
     hit = new Hit();
-    botA = new Bot();
-
+    scene->addItem(hit);
     scene->addItem(tank);
-    scene->addItem(botA);
+    hit->setVisible(false);
 
-    botA->setPos(600, 600);
-    size = ui->spinBox_2->value();
+    /* Создание объектов бот танки и выстрелы */
+
     int posX = 0, posY = 0;
+
+    botsCount = ui->spinBox->value();
+    for (int i=0; i < botsCount; i++) {
+        bot[i] = new Bot();
+        bot[i]->Random = i;
+        scene->addItem(bot[i]);
+        bot[i]->setPos(870, i * 3 * 60 + 30);
+
+    }
+
+    /* Создание препятствий */
+
+    size = ui->spinBox_2->value();
     for (int i=0; i < size; i++) {
         blocks[i] = new Block();
         scene->addItem(blocks[i]);
@@ -50,22 +68,35 @@ void Widget::on_pushButton_clicked() {
 
     }
 
-    scene->addItem(hit);
 
-    hit->setVisible(false);
+
+    /* Создание и связка сигналов и слотов  */
+
     timer = new QTimer();
     connect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
-    connect(timer, &QTimer::timeout, botA, &Bot::movingEngine);
+    for (int i=0; i < botsCount; i++) {
+        connect(timer, &QTimer::timeout, bot[i], &Bot::movingEngine);
+
+    }
+
     timer->start(10);
 
     timer = new QTimer();
-    connect(timer, &QTimer::timeout, tank, &Tank::shoot);
+    connect(timer, &QTimer::timeout, tank, &Tank::shoot); 
+    for (int i=0; i < botsCount; i++) {
+        connect(timer, &QTimer::timeout, bot[i], &Bot::shoot);
+
+    }
     timer->start(2000);
 
     connect(tank, &Tank::explosionAdd, hit, &Hit::explosionAdd);
     connect(tank, &Tank::explosionDelete, hit, &Hit::explosionDelete);
-    connect(tank, &Tank::restriction, this, &Widget::restriction);
-    connect(botA, &Bot::restriction, this, &Widget::restriction);
+    connect(tank, &Tank::restriction, this, &Widget::restriction); 
+    for (int i=0; i < botsCount; i++) {
+        connect(tank, &Tank::detectionEngine, bot[i], &Bot::detectionEngine);
+        connect(bot[i], &Bot::restriction, this, &Widget::restriction);
+
+    }
     connect(hit, &Hit::blockHit, this, &Widget::blockHit);
 
 }
@@ -172,6 +203,7 @@ void Widget::blockHit()
     }
 
 }
+
 
 Widget::~Widget()
 {

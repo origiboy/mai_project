@@ -21,9 +21,10 @@ signals:
     void explosionAdd();
     void explosionDelete();
     void restriction(QGraphicsItem *a);
+    void detectionEngine(QGraphicsItem *a);
 
 public slots:
-    void slotGameTimer(); // Слот, который отвечает за обработку перемещения треугольника
+    void slotGameTimer();
     void shoot();
 
 protected:
@@ -51,6 +52,8 @@ public:
 
 signals:
     void blockHit();
+
+
 public slots:
     void explosionAdd();
     void explosionDelete();
@@ -66,26 +69,6 @@ public:
 
 };
 
-class Block : public QObject, public QGraphicsItem
-{
-    Q_OBJECT
-public:
-    explicit Block(QObject *parent = 0);
-    ~Block();
 
-signals:
-
-public slots:
-
-protected:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-private:
-
-
-public:
-
-};
 
 #endif // TANK_H
