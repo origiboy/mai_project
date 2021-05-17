@@ -85,8 +85,8 @@ void Tank::slotGameTimer()
     if(this->y() - 1 < 30){
         this->setY(31);
     }
-    if(this->y() + 1 > 870){
-        this->setY(869);
+    if(this->y() + 1 > 570){
+        this->setY(569);
     }
 
     emit restriction(this);
@@ -132,7 +132,7 @@ void Hit::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
 
 void Hit::explosionAdd()
 {
-    blockHit();
+    blockTanksHit();
 }
 
 void Hit::explosionDelete()

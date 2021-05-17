@@ -10,15 +10,15 @@ Widget::Widget(QWidget *parent) :
     /* Инициализация фона */
 
     ui->setupUi(this);
-    this->resize(900,1000);
-    this->setFixedSize(900,1000);
+    this->resize(900,700);
+    this->setFixedSize(900,700);
     scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     QPixmap bg(":/images/bg.png");
-    scene->setSceneRect(0, 0, 900, 900); /// Устанавливаем область графической сцены
+    scene->setSceneRect(0, 0, 900, 600); /// Устанавливаем область графической сцены
     scene->addPixmap(bg);
 
     /* Кастомизация элементов */
@@ -39,9 +39,9 @@ void Widget::on_pushButton_clicked() {
 
     tank = new Tank();
     hit = new Hit();
-    scene->addItem(hit);
+
     scene->addItem(tank);
-    hit->setVisible(false);
+
 
     /* Создание объектов бот танки и выстрелы */
 
@@ -52,7 +52,7 @@ void Widget::on_pushButton_clicked() {
         bot[i] = new Bot();
         bot[i]->Random = i;
         scene->addItem(bot[i]);
-        bot[i]->setPos(870, i * 3 * 60 + 30);
+        bot[i]->setPos(570, i * 3 * 60 + 30);
 
     }
 
@@ -63,12 +63,13 @@ void Widget::on_pushButton_clicked() {
         blocks[i] = new Block();
         scene->addItem(blocks[i]);
         posX = qrand() % ((13 + 1) - 1) + 1; //qrand() % ((high + 1) - low) + low
-        posY = qrand() % ((13 + 1) - 1) + 1;
+        posY = qrand() % ((8 + 1) - 1) + 1;
         blocks[i]->setPos(posX * 60, posY * 60);
 
     }
 
-
+    scene->addItem(hit);
+    hit->setVisible(false);
 
     /* Создание и связка сигналов и слотов  */
 
@@ -97,7 +98,7 @@ void Widget::on_pushButton_clicked() {
         connect(bot[i], &Bot::restriction, this, &Widget::restriction);
 
     }
-    connect(hit, &Hit::blockHit, this, &Widget::blockHit);
+    connect(hit, &Hit::blockTanksHit, this, &Widget::blockTanksHit);
 
 }
 
@@ -124,7 +125,7 @@ void Widget::restriction(QGraphicsItem *a)
     }
 }
 
-void Widget::blockHit()
+void Widget::blockTanksHit()
 {
     int xTo = 300 * sin(tank->rotation()/180*3.14) + tank->x();
     int yTo = - 300 * cos(tank->rotation()/180*3.14) + tank->y();
@@ -133,10 +134,69 @@ void Widget::blockHit()
     int x = 0;
     int y = 0;
     int distToBlockMin = 1000;
-    int BlockMinIndex = 0;
+    int BlockMinIndex = 0, TankMinIndex = 0;
     int angle = tank->rotation();
     int direction = 1;
-    boolean blockWasHit = false;
+    boolean blockWasHit = false, TankWasHit = false;
+
+    /* Определение ближайшего бота по направлению выстрела */
+    if ((angle % 360 >= 45 && angle % 360 <= 135) || (angle % 360 >= 225 && angle % 360 <= 315))
+    {
+        x = xFrom;
+        if ((xTo - xFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (xTo - x) >= 0) {
+            y = ((x - xFrom)*(yTo - yFrom)/(xTo - xFrom)) + yFrom;
+            for (int j=0; j < botsCount; j++)
+            {
+                if (y >= bot[j]->y() - 30 && y <= bot[j]->y() + 30 && x >= bot[j]->x() - 30 && x <= bot[j]->x() + 30) {
+                    if (sqrt((bot[j]->x() - xFrom)*(bot[j]->x() - xFrom) + (bot[j]->y() - yFrom)*(bot[j]->y() - yFrom)) < distToBlockMin) {
+                        TankMinIndex = j;
+                        distToBlockMin = sqrt((bot[j]->x() + 30 - xFrom)*(bot[j]->x() + 30 - xFrom) + (bot[j]->y() + 30  - yFrom)*(bot[j]->y() + 30 - yFrom));
+                    }
+
+                    TankWasHit = true;
+                }
+                if (TankWasHit == true) {
+                    break;
+                }
+
+            }
+            x += direction * 5;
+
+        }
+    } else {
+        y = yFrom;
+        if ((yTo - yFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (yTo - y) >= 0) {
+            x = ((y - yFrom)*(xTo - xFrom)/(yTo - yFrom)) + xFrom;
+
+            for (int j=0; j < botsCount; j++)
+            {
+                if (y >= bot[j]->y() - 30 && y <= bot[j]->y() + 30 && x >= bot[j]->x() - 30 && x <= bot[j]->x() + 30) {
+                    if (sqrt((bot[j]->x() - xFrom)*(bot[j]->x() - xFrom) + (bot[j]->y() - yFrom)*(bot[j]->y() - yFrom)) < distToBlockMin) {
+                        TankMinIndex = j;
+                        distToBlockMin = sqrt((bot[j]->x() - xFrom)*(bot[j]->x() - xFrom) + (bot[j]->y() - yFrom)*(bot[j]->y() - yFrom));
+                    }
+                    TankWasHit = true;
+                    break;
+                }
+                if (TankWasHit == true) {
+                    break;
+                }
+
+            }
+            y += direction * 5;
+
+        }
+    }
+
+
+
+    /* Определение ближайшего блока по направлению выстрела */
     if ((angle % 360 >= 45 && angle % 360 <= 135) || (angle % 360 >= 225 && angle % 360 <= 315))
     {
         x = xFrom;
@@ -192,9 +252,22 @@ void Widget::blockHit()
     }
 
     if (blockWasHit == false) {
-        hit->setX(xTo);
-        hit->setY(yTo);
-        hit->setVisible(true);
+        if (TankWasHit == true) {
+            hit->setX(bot[TankMinIndex]->x());
+            hit->setY(bot[TankMinIndex]->y());
+            hit->setVisible(true);
+            float damage = 20;
+            if (bot[TankMinIndex]->health - damage <= 0) {
+               bot[TankMinIndex]->health = 0;
+               delete bot[TankMinIndex];
+            } else {
+                bot[TankMinIndex]->health = bot[TankMinIndex]->health - damage;
+            }
+        } else {
+            hit->setX(xTo);
+            hit->setY(yTo);
+            hit->setVisible(true);
+        }
     } else {
         hit->setX(blocks[BlockMinIndex]->x() + 30);
         hit->setY(blocks[BlockMinIndex]->y() + 30);

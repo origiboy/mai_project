@@ -47,7 +47,7 @@ private:
 
 public:
     int Random = 0;
-
+    float health = 60;
 };
 
 

@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
     QByteArrayData data[7];
-    char stringdata0[68];
+    char stringdata0[73];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,12 @@ QT_MOC_LITERAL(1, 7, 11), // "restriction"
 QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 14), // "QGraphicsItem*"
 QT_MOC_LITERAL(4, 35, 1), // "a"
-QT_MOC_LITERAL(5, 37, 8), // "blockHit"
-QT_MOC_LITERAL(6, 46, 21) // "on_pushButton_clicked"
+QT_MOC_LITERAL(5, 37, 13), // "blockTanksHit"
+QT_MOC_LITERAL(6, 51, 21) // "on_pushButton_clicked"
 
     },
     "Widget\0restriction\0\0QGraphicsItem*\0a\0"
-    "blockHit\0on_pushButton_clicked"
+    "blockTanksHit\0on_pushButton_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,7 +78,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->restriction((*reinterpret_cast< QGraphicsItem*(*)>(_a[1]))); break;
-        case 1: _t->blockHit(); break;
+        case 1: _t->blockTanksHit(); break;
         case 2: _t->on_pushButton_clicked(); break;
         default: ;
         }

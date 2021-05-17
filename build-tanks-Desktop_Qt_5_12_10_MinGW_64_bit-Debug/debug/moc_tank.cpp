@@ -219,7 +219,7 @@ void Tank::detectionEngine(QGraphicsItem * _t1)
 }
 struct qt_meta_stringdata_Hit_t {
     QByteArrayData data[5];
-    char stringdata0[43];
+    char stringdata0[48];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -229,13 +229,14 @@ struct qt_meta_stringdata_Hit_t {
 static const qt_meta_stringdata_Hit_t qt_meta_stringdata_Hit = {
     {
 QT_MOC_LITERAL(0, 0, 3), // "Hit"
-QT_MOC_LITERAL(1, 4, 8), // "blockHit"
-QT_MOC_LITERAL(2, 13, 0), // ""
-QT_MOC_LITERAL(3, 14, 12), // "explosionAdd"
-QT_MOC_LITERAL(4, 27, 15) // "explosionDelete"
+QT_MOC_LITERAL(1, 4, 13), // "blockTanksHit"
+QT_MOC_LITERAL(2, 18, 0), // ""
+QT_MOC_LITERAL(3, 19, 12), // "explosionAdd"
+QT_MOC_LITERAL(4, 32, 15) // "explosionDelete"
 
     },
-    "Hit\0blockHit\0\0explosionAdd\0explosionDelete"
+    "Hit\0blockTanksHit\0\0explosionAdd\0"
+    "explosionDelete"
 };
 #undef QT_MOC_LITERAL
 
@@ -275,7 +276,7 @@ void Hit::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         auto *_t = static_cast<Hit *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->blockHit(); break;
+        case 0: _t->blockTanksHit(); break;
         case 1: _t->explosionAdd(); break;
         case 2: _t->explosionDelete(); break;
         default: ;
@@ -284,7 +285,7 @@ void Hit::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (Hit::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Hit::blockHit)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Hit::blockTanksHit)) {
                 *result = 0;
                 return;
             }
@@ -336,7 +337,7 @@ int Hit::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Hit::blockHit()
+void Hit::blockTanksHit()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }

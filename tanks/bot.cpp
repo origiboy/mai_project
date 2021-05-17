@@ -39,7 +39,8 @@ void Bot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
         painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tankEnemy-moved.png"));
     }
         painter->setPen(QPen(Qt::green));
-        painter->fillRect(30, 30, -60, 0 - 0, QColor(255, 0, 0, 127));
+
+        painter->fillRect(30, 30, -60,  -60 + this->health, QColor(255, 0, 0, 127));
         Q_UNUSED(option);
         Q_UNUSED(widget);
 }
@@ -87,8 +88,8 @@ void Bot::movingEngine()
                 if(this->y() - 1 < 30){
                     this->setY(31);       // сверху
                 }
-                if(this->y() + 1 > 870){
-                    this->setY(869);        // снизу
+                if(this->y() + 1 > 570){
+                    this->setY(569);        // снизу
                 }
 
                 emit restriction(this);

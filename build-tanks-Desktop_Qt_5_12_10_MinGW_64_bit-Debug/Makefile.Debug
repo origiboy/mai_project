@@ -671,6 +671,7 @@ debug/moc_widget.cpp: ../tanks/widget.h \
 		../tanks/bot.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QDateTime \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qdatetime.h \
+		../tanks/block.h \
 		debug/moc_predefs.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/bin/moc.exe
 	C:\Qt\Qt5.12.10\5.12.10\mingw73_64\bin\moc.exe $(DEFINES) --include C:/Users/79853/Documents/GitHub/mai_project/build-tanks-Desktop_Qt_5_12_10_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/mkspecs/win32-g++ -IC:/Users/79853/Documents/GitHub/mai_project/tanks -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtMultimedia -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtNetwork -IC:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore -I. -IC:/Qt/Qt5.12.10/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.10/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.10/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.10/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.10/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.10/Tools/mingw730_64/x86_64-w64-mingw32/include ..\tanks\widget.h -o debug\moc_widget.cpp
@@ -1098,6 +1099,7 @@ debug/main.o: ../tanks/main.cpp ../tanks/widget.h \
 		../tanks/bot.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QDateTime \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qdatetime.h \
+		../tanks/block.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qapplication.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qcoreapplication.h \
@@ -1377,6 +1379,7 @@ debug/widget.o: ../tanks/widget.cpp ../tanks/widget.h \
 		../tanks/bot.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QDateTime \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qdatetime.h \
+		../tanks/block.h \
 		ui_widget.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qapplication.h \

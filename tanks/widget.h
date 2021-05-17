@@ -25,17 +25,21 @@ public:
 private:
     Ui::Widget      *ui;
     QGraphicsScene  *scene;
+    /* Пользовательский танк */
     Tank        *tank;
     Hit   *hit;
-    Hit   *hitEnemy[4];
+    /* Боты */
     Bot   *bot[4];
-    Block   *blocks[30];
+    Hit   *hitEnemy[4];
+    /* Блоки */
+    Block   *blocks[20];
+
     int size, botsCount;
     QTimer          *timer;
 
 public slots:
     void restriction(QGraphicsItem *a);
-    void blockHit();
+    void blockTanksHit();
     void on_pushButton_clicked();
 };
 

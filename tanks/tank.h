@@ -51,7 +51,7 @@ public:
     ~Hit();
 
 signals:
-    void blockHit();
+    void blockTanksHit();
 
 
 public slots:

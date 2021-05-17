@@ -36,18 +36,18 @@ public:
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
-        Widget->resize(900, 1000);
+        Widget->resize(900, 700);
         graphicsView = new QGraphicsView(Widget);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setEnabled(false);
-        graphicsView->setGeometry(QRect(0, 60, 900, 900));
+        graphicsView->setGeometry(QRect(0, 60, 900, 600));
         graphicsView->setFocusPolicy(Qt::NoFocus);
         graphicsView->setToolTipDuration(0);
         graphicsView->setAutoFillBackground(false);
         graphicsView->setLineWidth(0);
         author = new QLabel(Widget);
         author->setObjectName(QString::fromUtf8("author"));
-        author->setGeometry(QRect(0, 960, 900, 40));
+        author->setGeometry(QRect(0, 660, 900, 40));
         QFont font;
         font.setFamily(QString::fromUtf8("Segoe UI Light"));
         font.setPointSize(10);
@@ -97,8 +97,9 @@ public:
         spinBox_2 = new QSpinBox(Widget);
         spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
         spinBox_2->setGeometry(QRect(420, 35, 50, 20));
-        spinBox_2->setMinimum(10);
-        spinBox_2->setMaximum(30);
+        spinBox_2->setMinimum(5);
+        spinBox_2->setMaximum(20);
+        spinBox_2->setValue(5);
 
         retranslateUi(Widget);
 
