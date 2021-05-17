@@ -89,7 +89,7 @@ public:
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setGeometry(QRect(420, 5, 50, 20));
         spinBox->setMinimum(1);
-        spinBox->setMaximum(4);
+        spinBox->setMaximum(3);
         label_2 = new QLabel(Widget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(240, 30, 170, 30));

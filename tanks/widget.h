@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QShortcut>
 #include <QTimer>
+#include <QMessageBox>
 
 #include <tank.h>
 #include <bot.h>
@@ -29,19 +30,23 @@ private:
     Tank        *tank;
     Hit   *hit;
     /* Боты */
-    Bot   *bot[4];
-    Hit   *hitEnemy[4];
+    Bot   *bot[3];
+    Hit   *hitEnemy[3];
     /* Блоки */
     Block   *blocks[20];
 
     int size, botsCount, botsLeft;
     QTimer          *timer;
 
+signals:
+    void gameEndSignal(int a);
+
 public slots:
     void restriction(QGraphicsItem *a);
     void blockTanksHit();
     void BotBlockTanksHit(QGraphicsItem *a, int index);
     void on_pushButton_clicked();
+    void gameEnd(int a);
 };
 
 #endif // WIDGET_H

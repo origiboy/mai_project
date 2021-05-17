@@ -40,7 +40,6 @@ void Bot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     }
         painter->setPen(QPen(Qt::green));
 
-        painter->fillRect(30, 30, -60,  -60 + this->health, QColor(255, 0, 0, 127));
         Q_UNUSED(option);
         Q_UNUSED(widget);
 }

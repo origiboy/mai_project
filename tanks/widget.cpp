@@ -109,6 +109,7 @@ void Widget::on_pushButton_clicked() {
     }
     connect(hit, &Hit::blockTanksHit, this, &Widget::blockTanksHit);
     connect(hit, &Hit::BotBlockTanksHit, this, &Widget::BotBlockTanksHit);
+    connect(this, &Widget::gameEndSignal, this, &Widget::gameEnd);
 
 }
 
@@ -414,12 +415,10 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
             hitEnemy[index]->setX(tank->x());
             hitEnemy[index]->setY(tank->y());
             hitEnemy[index]->setVisible(true);
-            float damage = 20;
+            float damage = 10;
             if (tank->health - damage <= 0) {
                tank->health = 0;
-               delete tank;
-               bot[index]->aimDetecting = false;
-               bot[index]->aimDetected = false;
+               gameEndSignal(1);
             } else {
                tank->health = tank->health - damage;
             }
@@ -435,6 +434,22 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
         blocks[BlockMinIndex]->setPos(-900, -900);
     }
 
+}
+
+void Widget::gameEnd(int a) {
+    delete tank;
+    delete hit;
+    for (int j=0; j < botsCount; j++)
+    {
+        delete bot[j];
+        delete hitEnemy[j];
+    }
+
+    if (a == 1) {
+        QMessageBox::warning(this,
+        "Game Over",
+        "Вас убили(");
+    }
 }
 
 

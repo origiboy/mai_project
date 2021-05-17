@@ -39,7 +39,6 @@ void Tank::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->drawPixmap(-30,-30,60,60,QPixmap(":/images/tank-moved.png"));
     }
         painter->setPen(QPen(Qt::green));
-        painter->fillRect(30, 30, -60, 0 - 0, QColor(255, 0, 0, 127));
         Q_UNUSED(option);
         Q_UNUSED(widget);
 }
