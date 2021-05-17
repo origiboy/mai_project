@@ -34,12 +34,13 @@ private:
     /* Блоки */
     Block   *blocks[20];
 
-    int size, botsCount;
+    int size, botsCount, botsLeft;
     QTimer          *timer;
 
 public slots:
     void restriction(QGraphicsItem *a);
     void blockTanksHit();
+    void BotBlockTanksHit(QGraphicsItem *a, int index);
     void on_pushButton_clicked();
 };
 

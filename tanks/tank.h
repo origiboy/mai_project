@@ -41,6 +41,8 @@ public:
     boolean moveNext = false;
     QMediaPlayer * m_player, * s_player;
     QMediaPlaylist * m_playlist, * s_playlist;
+
+    float health = 60;
 };
 
 class Hit : public QObject, public QGraphicsItem
@@ -52,10 +54,12 @@ public:
 
 signals:
     void blockTanksHit();
+    void BotBlockTanksHit(QGraphicsItem *a, int index);
 
 
 public slots:
     void explosionAdd();
+    void BotexplosionAdd(QGraphicsItem *a, int index);
     void explosionDelete();
 
 protected:

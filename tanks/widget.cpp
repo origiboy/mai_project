@@ -48,11 +48,13 @@ void Widget::on_pushButton_clicked() {
     int posX = 0, posY = 0;
 
     botsCount = ui->spinBox->value();
+    botsLeft = botsCount;
     for (int i=0; i < botsCount; i++) {
         bot[i] = new Bot();
-        bot[i]->Random = i;
+        bot[i]->index = i;
         scene->addItem(bot[i]);
         bot[i]->setPos(570, i * 3 * 60 + 30);
+        hitEnemy[i] = new Hit();
 
     }
 
@@ -70,6 +72,12 @@ void Widget::on_pushButton_clicked() {
 
     scene->addItem(hit);
     hit->setVisible(false);
+
+    for (int i=0; i < botsCount; i++) {
+        scene->addItem(hitEnemy[i]);
+        hitEnemy[i]->setVisible(false);
+
+    }
 
     /* Создание и связка сигналов и слотов  */
 
@@ -96,9 +104,11 @@ void Widget::on_pushButton_clicked() {
     for (int i=0; i < botsCount; i++) {
         connect(tank, &Tank::detectionEngine, bot[i], &Bot::detectionEngine);
         connect(bot[i], &Bot::restriction, this, &Widget::restriction);
+        connect(bot[i], &Bot::BotexplosionAdd, hit, &Hit::BotexplosionAdd);
 
     }
     connect(hit, &Hit::blockTanksHit, this, &Widget::blockTanksHit);
+    connect(hit, &Hit::BotBlockTanksHit, this, &Widget::BotBlockTanksHit);
 
 }
 
@@ -260,6 +270,10 @@ void Widget::blockTanksHit()
             if (bot[TankMinIndex]->health - damage <= 0) {
                bot[TankMinIndex]->health = 0;
                delete bot[TankMinIndex];
+               botsCount--;
+               if (botsCount == 0) {
+
+               }
             } else {
                 bot[TankMinIndex]->health = bot[TankMinIndex]->health - damage;
             }
@@ -272,6 +286,152 @@ void Widget::blockTanksHit()
         hit->setX(blocks[BlockMinIndex]->x() + 30);
         hit->setY(blocks[BlockMinIndex]->y() + 30);
         hit->setVisible(true);
+        blocks[BlockMinIndex]->setPos(-900, -900);
+    }
+
+}
+
+void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
+{
+    int xTo = 300 * sin(a->rotation()/180*3.14) + a->x();
+    int yTo = - 300 * cos(a->rotation()/180*3.14) + a->y();
+    int xFrom = a->x();
+    int yFrom = a->y();
+    int x = 0;
+    int y = 0;
+    int distToBlockMin = 1000;
+    int BlockMinIndex = 0;
+    int angle = a->rotation();
+    int direction = 1;
+    boolean blockWasHit = false, TankWasHit = false;
+
+    /* Определение ближайшего бота по направлению выстрела */
+    if ((angle % 360 >= 45 && angle % 360 <= 135) || (angle % 360 >= 225 && angle % 360 <= 315))
+    {
+        x = xFrom;
+        if ((xTo - xFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (xTo - x) >= 0) {
+            y = ((x - xFrom)*(yTo - yFrom)/(xTo - xFrom)) + yFrom;
+                if (y >= tank->y() - 30 && y <= tank->y() + 30 && x >= tank->x() - 30 && x <= tank->x() + 30) {
+                    if (sqrt((tank->x() - xFrom)*(tank->x() - xFrom) + (tank->y() - yFrom)*(tank->y() - yFrom)) < distToBlockMin) {
+                        distToBlockMin = sqrt((tank->x() + 30 - xFrom)*(tank->x() + 30 - xFrom) + (tank->y() + 30  - yFrom)*(tank->y() + 30 - yFrom));
+                    }
+
+                    TankWasHit = true;
+                }
+                if (TankWasHit == true) {
+                    break;
+                }
+
+            x += direction * 5;
+
+        }
+    } else {
+        y = yFrom;
+        if ((yTo - yFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (yTo - y) >= 0) {
+            x = ((y - yFrom)*(xTo - xFrom)/(yTo - yFrom)) + xFrom;
+
+                if (y >= tank->y() - 30 && y <= tank->y() + 30 && x >= tank->x() - 30 && x <= tank->x() + 30) {
+                    if (sqrt((tank->x() - xFrom)*(tank->x() - xFrom) + (tank->y() - yFrom)*(tank->y() - yFrom)) < distToBlockMin) {
+                        distToBlockMin = sqrt((tank->x() - xFrom)*(tank->x() - xFrom) + (tank->y() - yFrom)*(tank->y() - yFrom));
+                    }
+                    TankWasHit = true;
+                    break;
+                }
+                if (TankWasHit == true) {
+                    break;
+                }
+
+            y += direction * 5;
+
+        }
+    }
+
+
+
+    /* Определение ближайшего блока по направлению выстрела */
+    if ((angle % 360 >= 45 && angle % 360 <= 135) || (angle % 360 >= 225 && angle % 360 <= 315))
+    {
+        x = xFrom;
+        if ((xTo - xFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (xTo - x) >= 0) {
+            y = ((x - xFrom)*(yTo - yFrom)/(xTo - xFrom)) + yFrom;
+            for (int j=0; j < size; j++)
+            {
+                if (y >= blocks[j]->y() && y <= blocks[j]->y() + 60 && x >= blocks[j]->x() && x <= blocks[j]->x() + 60) {
+                    if (sqrt((blocks[j]->x() - xFrom)*(blocks[j]->x() - xFrom) + (blocks[j]->y() - yFrom)*(blocks[j]->y() - yFrom)) < distToBlockMin) {
+                        BlockMinIndex = j;
+                        distToBlockMin = sqrt((blocks[j]->x() + 30 - xFrom)*(blocks[j]->x() + 30 - xFrom) + (blocks[j]->y() + 30  - yFrom)*(blocks[j]->y() + 30 - yFrom));
+                    }
+
+                    blockWasHit = true;
+                }
+                if (blockWasHit == true) {
+                    break;
+                }
+
+            }
+            x += direction * 5;
+
+        }
+    } else {
+        y = yFrom;
+        if ((yTo - yFrom) < 0) {
+            direction = -1;
+        }
+        while (direction * (yTo - y) >= 0) {
+            x = ((y - yFrom)*(xTo - xFrom)/(yTo - yFrom)) + xFrom;
+
+            for (int j=0; j < size; j++)
+            {
+                if (y >= blocks[j]->y() && y <= blocks[j]->y() + 60 && x >= blocks[j]->x() && x <= blocks[j]->x() + 60) {
+                    if (sqrt((blocks[j]->x() - xFrom)*(blocks[j]->x() - xFrom) + (blocks[j]->y() - yFrom)*(blocks[j]->y() - yFrom)) < distToBlockMin) {
+                        BlockMinIndex = j;
+                        distToBlockMin = sqrt((blocks[j]->x() - xFrom)*(blocks[j]->x() - xFrom) + (blocks[j]->y() - yFrom)*(blocks[j]->y() - yFrom));
+                    }
+                    blockWasHit = true;
+                    break;
+                }
+                if (blockWasHit == true) {
+                    break;
+                }
+
+            }
+            y += direction * 5;
+
+        }
+    }
+
+    if (blockWasHit == false) {
+        if (TankWasHit == true) {
+            hitEnemy[index]->setX(tank->x());
+            hitEnemy[index]->setY(tank->y());
+            hitEnemy[index]->setVisible(true);
+            float damage = 20;
+            if (tank->health - damage <= 0) {
+               tank->health = 0;
+               delete tank;
+               bot[index]->aimDetecting = false;
+               bot[index]->aimDetected = false;
+            } else {
+               tank->health = tank->health - damage;
+            }
+        } else {
+            hitEnemy[index]->setX(xTo);
+            hitEnemy[index]->setY(yTo);
+            hitEnemy[index]->setVisible(true);
+        }
+    } else {
+        hitEnemy[index]->setX(blocks[BlockMinIndex]->x() + 30);
+        hitEnemy[index]->setY(blocks[BlockMinIndex]->y() + 30);
+        hitEnemy[index]->setVisible(true);
         blocks[BlockMinIndex]->setPos(-900, -900);
     }
 

@@ -50,7 +50,7 @@ void Bot::movingEngine()
     if (aimDetecting == false) {
         if (moving == false && turning == false) {
             turning = true;
-            qsrand(QDateTime::currentMSecsSinceEpoch() * (Random + 1));
+            qsrand(QDateTime::currentMSecsSinceEpoch() * (index + 1));
             angleNew = qrand() % ((360 + 1) - 0) + 0;
             movingCount = qrand() % ((300 + 1) - 10) + 10;
         }
@@ -134,5 +134,6 @@ void Bot::shoot()
 {
         if (aimDetected == true) {
             s_player->play();
+            BotexplosionAdd(this, this->index);
         }
 }

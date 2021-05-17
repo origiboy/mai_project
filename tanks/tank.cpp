@@ -135,6 +135,11 @@ void Hit::explosionAdd()
     blockTanksHit();
 }
 
+void Hit::BotexplosionAdd(QGraphicsItem *a, int index)
+{
+    BotBlockTanksHit(a, index);
+}
+
 void Hit::explosionDelete()
 {
     this->setVisible(false);
