@@ -639,6 +639,9 @@ release/moc_widget.cpp: ../tanks/widget.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QTimer \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qtimer.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qdialog.h \
 		../tanks/tank.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QGraphicsItem \
@@ -1067,6 +1070,9 @@ release/main.o: ../tanks/main.cpp ../tanks/widget.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QTimer \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qtimer.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qdialog.h \
 		../tanks/tank.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QGraphicsItem \
@@ -1347,6 +1353,9 @@ release/widget.o: ../tanks/widget.cpp ../tanks/widget.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QTimer \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qtimer.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/qbasictimer.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/qdialog.h \
 		../tanks/tank.h \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtCore/QObject \
 		C:/Qt/Qt5.12.10/5.12.10/mingw73_64/include/QtWidgets/QGraphicsItem \

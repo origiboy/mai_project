@@ -134,5 +134,7 @@ void Bot::shoot()
         if (aimDetected == true) {
             s_player->play();
             BotexplosionAdd(this, this->index);
+        } else {
+            BotexplosionDelete(this->index);
         }
 }

@@ -30,10 +30,14 @@ Widget::Widget(QWidget *parent) :
 
 void Widget::on_pushButton_clicked() {
 
+
     /* Отключение кнопки запуска */
 
     ui->pushButton->setDisabled(true);
     ui->pushButton->setStyleSheet("background-color: #333;" "selection-color: #333;" "color: white;" "border-radius: 10px;");
+
+    ui->spinBox_2->setDisabled(true);
+    ui->spinBox->setDisabled(true);
 
     /* Создание объектов пользовательский танк и выстрел */
 
@@ -53,7 +57,7 @@ void Widget::on_pushButton_clicked() {
         bot[i] = new Bot();
         bot[i]->index = i;
         scene->addItem(bot[i]);
-        bot[i]->setPos(570, i * 3 * 60 + 30);
+        bot[i]->setPos(840, (i+1) * 2 * 60 + 30);
         hitEnemy[i] = new Hit();
 
     }
@@ -64,7 +68,7 @@ void Widget::on_pushButton_clicked() {
     for (int i=0; i < size; i++) {
         blocks[i] = new Block();
         scene->addItem(blocks[i]);
-        posX = qrand() % ((13 + 1) - 1) + 1; //qrand() % ((high + 1) - low) + low
+        posX = qrand() % ((11 + 1) - 1) + 1; //qrand() % ((high + 1) - low) + low
         posY = qrand() % ((8 + 1) - 1) + 1;
         blocks[i]->setPos(posX * 60, posY * 60);
 
@@ -104,11 +108,12 @@ void Widget::on_pushButton_clicked() {
     for (int i=0; i < botsCount; i++) {
         connect(tank, &Tank::detectionEngine, bot[i], &Bot::detectionEngine);
         connect(bot[i], &Bot::restriction, this, &Widget::restriction);
-        connect(bot[i], &Bot::BotexplosionAdd, hit, &Hit::BotexplosionAdd);
-
+        connect(bot[i], &Bot::BotexplosionAdd, hitEnemy[i], &Hit::BotexplosionAdd);
+        connect(bot[i], &Bot::BotexplosionDelete, this, &Widget::BotexplosionDelete);
+        connect(hitEnemy[i], &Hit::BotBlockTanksHit, this, &Widget::BotBlockTanksHit);
     }
     connect(hit, &Hit::blockTanksHit, this, &Widget::blockTanksHit);
-    connect(hit, &Hit::BotBlockTanksHit, this, &Widget::BotBlockTanksHit);
+
     connect(this, &Widget::gameEndSignal, this, &Widget::gameEnd);
 
 }
@@ -267,13 +272,14 @@ void Widget::blockTanksHit()
             hit->setX(bot[TankMinIndex]->x());
             hit->setY(bot[TankMinIndex]->y());
             hit->setVisible(true);
-            float damage = 20;
+            float damage = 30;
             if (bot[TankMinIndex]->health - damage <= 0) {
                bot[TankMinIndex]->health = 0;
-               delete bot[TankMinIndex];
+               scene->removeItem(bot[TankMinIndex]);
+               scene->removeItem(hitEnemy[TankMinIndex]);
                botsCount--;
                if (botsCount == 0) {
-
+                gameEndSignal(2);
                }
             } else {
                 bot[TankMinIndex]->health = bot[TankMinIndex]->health - damage;
@@ -437,20 +443,76 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
 }
 
 void Widget::gameEnd(int a) {
-    delete tank;
-    delete hit;
+    timer->stop();
+    delete timer;
+
+    disconnect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
+    for (int i=0; i < botsCount; i++) {
+        disconnect(timer, &QTimer::timeout, bot[i], &Bot::movingEngine);
+    }
+    disconnect(timer, &QTimer::timeout, tank, &Tank::shoot);
+    for (int i=0; i < botsCount; i++) {
+        disconnect(timer, &QTimer::timeout, bot[i], &Bot::shoot);
+    }
+
+    disconnect(tank, &Tank::explosionAdd, hit, &Hit::explosionAdd);
+    disconnect(tank, &Tank::explosionDelete, hit, &Hit::explosionDelete);
+    disconnect(tank, &Tank::restriction, this, &Widget::restriction);
+    for (int i=0; i < botsCount; i++) {
+        disconnect(tank, &Tank::detectionEngine, bot[i], &Bot::detectionEngine);
+        disconnect(bot[i], &Bot::restriction, this, &Widget::restriction);
+        disconnect(bot[i], &Bot::BotexplosionAdd, hitEnemy[i], &Hit::BotexplosionAdd);
+        disconnect(bot[i], &Bot::BotexplosionDelete, this, &Widget::BotexplosionDelete);
+        disconnect(hitEnemy[i], &Hit::BotBlockTanksHit, this, &Widget::BotBlockTanksHit);
+    }
+    disconnect(hit, &Hit::blockTanksHit, this, &Widget::blockTanksHit);
+    disconnect(this, &Widget::gameEndSignal, this, &Widget::gameEnd);
+
     for (int j=0; j < botsCount; j++)
     {
+
+            /*
+            bot[j]->deleteLater();
+            hitEnemy[j]->deleteLater(); */
+        scene->removeItem(bot[j]);
+        scene->removeItem(hitEnemy[j]);
         delete bot[j];
         delete hitEnemy[j];
     }
+    scene->removeItem(tank);
+    scene->removeItem(hit);
+    delete tank;
+    delete hit;
 
+    for (int j=0; j < size; j++)
+    {
+        scene->removeItem(blocks[j]);
+        delete blocks[j];
+    }
     if (a == 1) {
         QMessageBox::warning(this,
         "Game Over",
         "Вас убили(");
     }
+    if (a == 2) {
+        QMessageBox::warning(this,
+        "Game Over",
+        "Вы выиграли!");
+    }
+
+
+
+    ui->pushButton->setDisabled(false);
+    ui->pushButton->setStyleSheet("background-color: #008000;" "selection-color: #008000;" "color: white;" "border-radius: 10px;");
+
+    ui->spinBox_2->setDisabled(false);
+    ui->spinBox->setDisabled(false);
 }
+
+void Widget::BotexplosionDelete(int index) {
+    hitEnemy[index]->setVisible(false);
+}
+
 
 
 Widget::~Widget()

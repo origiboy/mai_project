@@ -21,6 +21,7 @@ signals:
     void restriction(QGraphicsItem *a);
     void aimingEngine(QGraphicsItem *a);
     void BotexplosionAdd(QGraphicsItem *a, int index);
+    void BotexplosionDelete(int index);
 
 public slots:
     void movingEngine();
@@ -41,14 +42,16 @@ private:
     boolean moving = false;
 
 
-    QMediaPlayer * m_player, * s_player;
-    QMediaPlaylist * m_playlist, * s_playlist;
+
 
 public:
     int index = 0;
     float health = 60;
     boolean aimDetecting = false;
     boolean aimDetected = false;
+
+    QMediaPlayer * m_player, * s_player;
+    QMediaPlaylist * m_playlist, * s_playlist;
 };
 
 

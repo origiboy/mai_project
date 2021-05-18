@@ -46,7 +46,9 @@ public slots:
     void blockTanksHit();
     void BotBlockTanksHit(QGraphicsItem *a, int index);
     void on_pushButton_clicked();
+    void BotexplosionDelete(int index);
     void gameEnd(int a);
+
 };
 
 #endif // WIDGET_H
