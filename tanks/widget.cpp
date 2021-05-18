@@ -39,6 +39,8 @@ void Widget::on_pushButton_clicked() {
     ui->spinBox_2->setDisabled(true);
     ui->spinBox->setDisabled(true);
 
+    ui->progressBar->setValue(100);
+
     /* Создание объектов пользовательский танк и выстрел */
 
     tank = new Tank();
@@ -421,12 +423,14 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
             hitEnemy[index]->setX(tank->x());
             hitEnemy[index]->setY(tank->y());
             hitEnemy[index]->setVisible(true);
-            float damage = 10;
+            float damage = 20;
             if (tank->health - damage <= 0) {
                tank->health = 0;
+               ui->progressBar->setValue(tank->health);
                gameEndSignal(1);
             } else {
                tank->health = tank->health - damage;
+               ui->progressBar->setValue(tank->health);
             }
         } else {
             hitEnemy[index]->setX(xTo);

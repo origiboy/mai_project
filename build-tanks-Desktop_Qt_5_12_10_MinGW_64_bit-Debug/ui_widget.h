@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
@@ -26,11 +27,12 @@ public:
     QLabel *author;
     QPushButton *pushButton;
     QLabel *logo;
-    QPushButton *restart;
     QLabel *label;
     QSpinBox *spinBox;
     QLabel *label_2;
     QSpinBox *spinBox_2;
+    QLabel *label_3;
+    QProgressBar *progressBar;
 
     void setupUi(QWidget *Widget)
     {
@@ -73,9 +75,6 @@ public:
         font2.setBold(true);
         font2.setWeight(75);
         logo->setFont(font2);
-        restart = new QPushButton(Widget);
-        restart->setObjectName(QString::fromUtf8("restart"));
-        restart->setGeometry(QRect(150, 10, 40, 40));
         label = new QLabel(Widget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(240, 0, 170, 30));
@@ -100,6 +99,20 @@ public:
         spinBox_2->setMinimum(5);
         spinBox_2->setMaximum(20);
         spinBox_2->setValue(5);
+        label_3 = new QLabel(Widget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(640, 670, 91, 20));
+        label_3->setFont(font3);
+        progressBar = new QProgressBar(Widget);
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        progressBar->setGeometry(QRect(760, 665, 118, 30));
+        QFont font4;
+        font4.setFamily(QString::fromUtf8("GOST type A"));
+        font4.setPointSize(10);
+        font4.setBold(true);
+        font4.setWeight(75);
+        progressBar->setFont(font4);
+        progressBar->setValue(100);
 
         retranslateUi(Widget);
 
@@ -112,9 +125,9 @@ public:
         author->setText(QApplication::translate("Widget", "Created by Mike Kosarev for MAI", nullptr));
         pushButton->setText(QApplication::translate("Widget", "\320\235\320\220\320\247\320\220\320\242\320\254 \320\230\320\223\320\240\320\243", nullptr));
         logo->setText(QApplication::translate("Widget", "TanksBattle", nullptr));
-        restart->setText(QString());
         label->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\276\321\202\320\276\320\262", nullptr));
         label_2->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\273\320\276\320\272\320\276\320\262", nullptr));
+        label_3->setText(QApplication::translate("Widget", "\320\227\320\264\320\276\321\200\320\276\320\262\321\214\320\265:", nullptr));
     } // retranslateUi
 
 };

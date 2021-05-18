@@ -42,7 +42,7 @@ public:
     QMediaPlayer * m_player, * s_player;
     QMediaPlaylist * m_playlist, * s_playlist;
 
-    float health = 60;
+    float health = 100;
 };
 
 class Hit : public QObject, public QGraphicsItem
