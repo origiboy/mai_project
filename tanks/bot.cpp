@@ -3,7 +3,8 @@
 
 Bot::~Bot()
 {
-
+    delete m_playlist;
+    delete m_player;
 }
 
 Bot::Bot(QObject *parent) :
@@ -52,10 +53,12 @@ void Bot::movingEngine()
             qsrand(QDateTime::currentMSecsSinceEpoch() * (index + 1));
             angleNew = qrand() % ((360 + 1) - 0) + 0;
             movingCount = qrand() % ((300 + 1) - 10) + 10;
+
         }
         else {
-            m_player->play();
+
             if (turning == true) {
+                m_player->play();
                 if (angle > angleNew) {
                     angle -= 1;
                     setRotation(angle);
@@ -70,8 +73,9 @@ void Bot::movingEngine()
                 }
             }
             if (moving == true) {
+                m_player->play();
                 if (movingCount > 0) {
-                    setPos(mapToParent(0, -1));
+                    this->setPos(mapToParent(0, -1));
                     movingCount--;
                 } else {
                     turning = false;
@@ -121,6 +125,8 @@ void Bot::detectionEngine(QGraphicsItem *a)
         }
         if (this->rotation() == angleAim) {
             aimDetected = true;
+            m_player->stop();
+
         } else {
             aimDetected = false;
         }

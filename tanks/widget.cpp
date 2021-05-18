@@ -21,12 +21,16 @@ Widget::Widget(QWidget *parent) :
     scene->setSceneRect(0, 0, 900, 600); /// Устанавливаем область графической сцены
     scene->addPixmap(bg);
 
+
+
     /* Кастомизация элементов */
 
     ui->author->setStyleSheet("background-color: #75c1ff;" "selection-color: #75c1ff;" "selection-background-color: blue;");
     ui->pushButton->setStyleSheet("background-color: #008000;" "selection-color: #008000;" "color: white;" "border-radius: 10px;");
 
 }
+
+
 
 void Widget::on_pushButton_clicked() {
 
@@ -88,7 +92,7 @@ void Widget::on_pushButton_clicked() {
     /* Создание и связка сигналов и слотов  */
 
     timer = new QTimer();
-    connect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
+    connect(timer, &QTimer::timeout, tank, &Tank::tankMovingEngine);
     for (int i=0; i < botsCount; i++) {
         connect(timer, &QTimer::timeout, bot[i], &Bot::movingEngine);
 
@@ -279,8 +283,8 @@ void Widget::blockTanksHit()
                bot[TankMinIndex]->health = 0;
                scene->removeItem(bot[TankMinIndex]);
                scene->removeItem(hitEnemy[TankMinIndex]);
-               botsCount--;
-               if (botsCount == 0) {
+               botsLeft--;
+               if (botsLeft == 0) {
                 gameEndSignal(2);
                }
             } else {
@@ -426,7 +430,8 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
             float damage = 20;
             if (tank->health - damage <= 0) {
                tank->health = 0;
-               ui->progressBar->setValue(tank->health);
+               ui->progressBar->setValue(0);
+
                gameEndSignal(1);
             } else {
                tank->health = tank->health - damage;
@@ -447,10 +452,10 @@ void Widget::BotBlockTanksHit(QGraphicsItem *a, int index)
 }
 
 void Widget::gameEnd(int a) {
+
     timer->stop();
     delete timer;
-
-    disconnect(timer, &QTimer::timeout, tank, &Tank::slotGameTimer);
+    disconnect(timer, &QTimer::timeout, tank, &Tank::tankMovingEngine);
     for (int i=0; i < botsCount; i++) {
         disconnect(timer, &QTimer::timeout, bot[i], &Bot::movingEngine);
     }
@@ -474,10 +479,6 @@ void Widget::gameEnd(int a) {
 
     for (int j=0; j < botsCount; j++)
     {
-
-            /*
-            bot[j]->deleteLater();
-            hitEnemy[j]->deleteLater(); */
         scene->removeItem(bot[j]);
         scene->removeItem(hitEnemy[j]);
         delete bot[j];

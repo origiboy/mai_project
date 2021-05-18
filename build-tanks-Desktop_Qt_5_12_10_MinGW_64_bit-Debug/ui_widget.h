@@ -33,6 +33,7 @@ public:
     QSpinBox *spinBox_2;
     QLabel *label_3;
     QProgressBar *progressBar;
+    QLabel *label_4;
 
     void setupUi(QWidget *Widget)
     {
@@ -68,7 +69,7 @@ public:
         pushButton->setCursor(QCursor(Qt::PointingHandCursor));
         logo = new QLabel(Widget);
         logo->setObjectName(QString::fromUtf8("logo"));
-        logo->setGeometry(QRect(700, 0, 200, 60));
+        logo->setGeometry(QRect(700, 0, 200, 45));
         QFont font2;
         font2.setFamily(QString::fromUtf8("GOST type A"));
         font2.setPointSize(30);
@@ -113,6 +114,17 @@ public:
         font4.setWeight(75);
         progressBar->setFont(font4);
         progressBar->setValue(100);
+        label_4 = new QLabel(Widget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(800, 40, 73, 20));
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("Segoe UI Black"));
+        font5.setPointSize(10);
+        font5.setBold(true);
+        font5.setItalic(true);
+        font5.setWeight(75);
+        label_4->setFont(font5);
+        label_4->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
 
         retranslateUi(Widget);
 
@@ -128,6 +140,7 @@ public:
         label->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\276\321\202\320\276\320\262", nullptr));
         label_2->setText(QApplication::translate("Widget", "\320\232\320\276\320\273\320\270\321\207\320\265\321\201\321\202\320\262\320\276 \320\261\320\273\320\276\320\272\320\276\320\262", nullptr));
         label_3->setText(QApplication::translate("Widget", "\320\227\320\264\320\276\321\200\320\276\320\262\321\214\320\265:", nullptr));
+        label_4->setText(QApplication::translate("Widget", "mai edition", nullptr));
     } // retranslateUi
 
 };

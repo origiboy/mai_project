@@ -6,10 +6,13 @@
 #include <QShortcut>
 #include <QTimer>
 #include <QMessageBox>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 #include <tank.h>
 #include <bot.h>
 #include <block.h>
+#include <hit.h>
 
 namespace Ui {
 class Widget;
@@ -36,7 +39,9 @@ private:
     Block   *blocks[20];
 
     int size, botsCount, botsLeft;
+    boolean sound = false;
     QTimer          *timer;
+
 
 signals:
     void gameEndSignal(int a);

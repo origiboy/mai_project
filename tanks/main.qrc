@@ -9,5 +9,7 @@
         <file>images/tank-moved.png</file>
         <file>images/tankEnemy.png</file>
         <file>images/tankEnemy-moved.png</file>
+        <file>sounds/background.mp3</file>
+        <file>images/sound.png</file>
     </qresource>
 </RCC>

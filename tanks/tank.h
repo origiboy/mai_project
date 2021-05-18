@@ -24,7 +24,7 @@ signals:
     void detectionEngine(QGraphicsItem *a);
 
 public slots:
-    void slotGameTimer();
+    void tankMovingEngine();
     void shoot();
 
 protected:
@@ -45,33 +45,7 @@ public:
     float health = 100;
 };
 
-class Hit : public QObject, public QGraphicsItem
-{
-    Q_OBJECT
-public:
-    explicit Hit(QObject *parent = 0);
-    ~Hit();
 
-signals:
-    void blockTanksHit();
-    void BotBlockTanksHit(QGraphicsItem *a, int index);
-
-
-public slots:
-    void explosionAdd();
-    void BotexplosionAdd(QGraphicsItem *a, int index);
-    void explosionDelete();
-
-protected:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-private:
-
-
-public:
-
-};
 
 
 

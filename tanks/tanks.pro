@@ -12,6 +12,7 @@ CONFIG += c++11
 SOURCES += \
     block.cpp \
     bot.cpp \
+    hit.cpp \
     main.cpp \
     tank.cpp \
     widget.cpp
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     block.h \
     bot.h \
+    hit.h \
     tank.h \
     widget.h
 
